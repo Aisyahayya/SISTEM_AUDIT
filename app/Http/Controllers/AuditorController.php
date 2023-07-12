@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DataPendahuluan;
 use App\Models\Evaluasi;
@@ -12,6 +13,7 @@ use App\Models\Response;
 use App\Models\Standart;
 use App\Models\User;
 use App\Models\StandarRuangLingkup;
+use App\Models\UnitAudit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Table;
@@ -314,12 +316,14 @@ class AuditorController extends Controller
     {
         $request->validate([
             'unit'                           =>      'required|string',
+            'auditee'                        =>      'required|string',
             'ruang_lingkup'                  =>      'required|string',
             'parameter_ruang_lingkup'        =>      'required|string',
         ]);
 
         $srl = StandarRuangLingkup::create([
             'unit' => $request['unit'],
+            'auditee' => $request['auditee'],
             'ruang_lingkup' => $request['ruang_lingkup'],
             'parameter_ruang_lingkup' => $request['parameter_ruang_lingkup'],
             'status' => 'Belum Teraudit'
@@ -341,6 +345,16 @@ class AuditorController extends Controller
         // die;
 
         return view('auditor.detailStandarRuangLingkup', compact('standarRuangLingkup', 'evaluasi'));
+    }
+    
+    public function feedback($id)
+    {
+        $standarRuangLingkup = StandarRuangLingkup::find($id);
+        $feedback = Feedback::where('standar_ruang_lingkup_id', $id)->first();
+        // print_r($feedback->kondisi_awal ? $feedback->kondisi_awal : '');
+        // die;
+
+        return view('auditor.feedback', compact('standarRuangLingkup', 'feedback'));
     }
 
     public function tambahEvaluasi(Request $request)
@@ -522,6 +536,8 @@ class AuditorController extends Controller
 
     public function pageTambahStandarRuangLingkup()
     {
-        return view('auditor.tambahStandarRuangLingkup');
+        $unit = UnitAudit::all();
+        $auditee = User::role('auditee')->get();
+        return view('auditor.tambahStandarRuangLingkup',compact('unit','auditee'));
     }
 }
