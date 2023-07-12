@@ -193,6 +193,11 @@ Route::group(['middleware' => ['role:auditor']], function () {
     Route::post('/tambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'tambahStandarRuangLingkup'])->name('tambahStandarRuangLingkup');
     Route::get('/pageTambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'pageTambahStandarRuangLingkup'])->name('pageTambahStandarRuangLingkup');
 
+    Route::post('/tambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'tambahSRL'])->name('tambahSRL');
+    Route::get('/auditor/detailStandarRuangLingkup/{id}', [App\Http\Controllers\AuditorController::class, 'detailStandarRuangLingkup'])->name('detailStandarRuangLingkup');
+    Route::post('/tambahEvaluasi', [App\Http\Controllers\AuditorController::class, 'tambahEvaluasi'])->name('tambahEvaluasi');
+    Route::put('/updateEvaluasi/{id}', [App\Http\Controllers\AuditorController::class, 'updateEvaluasi'])->name('updateEvaluasi');
+    
 });
 
 Route::get('/route-cache', function() {
