@@ -194,16 +194,17 @@
             <form action="{{ route('ketua.prosesadd')}}" method="post">
                 @csrf
                 <div class="modal-body">
+                    <input type="hidden" name='id' id='id'>
                     <div class="mb-3 row">
                         <label for="unit" class="col-sm-5 col-form-label">Unit</label>
                         <div class="col-1"> :</div>
                         <div class="col-sm-6">
-                            <input type="text" name="unit" class="form-control @error('unit') is-invalid @enderror" id="unit">
-                            @error('unit')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
+                            <!-- <input type="text" name="unit" class="form-control @error('unit') is-invalid @enderror" id="unit"> -->
+                            <select class="form-control" name="unit" id="unit">
+                                @foreach($unitSelect as $v)
+                                <option value="{{$v->id}}">{{$v->nama_unit}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -229,6 +230,8 @@
                             @enderror
                         </div>
                     </div>
+
+                    
                     
                 </div>
                 <div class="modal-footer">
@@ -257,28 +260,28 @@
                 <table id="table_standart" class="table table-striped text-center table-bordered">
                     <thead>
                     <tr class="border-bottom">
-                        <th scope="col">ID</th>
-                        <th scope="col">Nama</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama Unit</th>
+                        <th scope="col">Auditor</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Fakultas</th>
-                        <th scope="col">Prodi</th>
                         <th scope="col">Aksi</th>
                     </tr>
                     </thead> 
                     <tbody>
-                        @foreach($auditor as $v)
+                        @foreach($table as $v)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
+                                <td>{{$v->nama_unit}}</td>
                                 <td>{{$v->name}}</td>
                                 <td>{{$v->email}}</td>
-                                <td>{{$v->fakultas}}</td>
-                                <td>{{$v->prodi}}</td>
                                 <td class="text-center list-inline">
                                     <div class="d-inline-flex bd-highlight">
-                                    <form id="form" class="delete-form" action="{{ route('destroy',$v->id) }}"
+                                    <button class="btn btn-outline-success btn-sm" onclick="showmodaladd({{$v->id_map}}, {{$v->id}}, {{$v->id_auditor}}, '{{$v->nip}}')">edit</button>
+                                    <form id="form" class="delete-form" action="{{ route('ketua.destroymap') }}"
                                           method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                                            @csrf
+                                            <input type="hidden" name="id_map" value="{{$v->id_map}}">
+                                        <!-- @method('DELETE') -->
                                         <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteFunction()">Hapus</button>
                                     </form>
                                     </div>
@@ -451,8 +454,21 @@
     // }
 
     $("#add_auditor").on("click", function(){
+        $("#id").val('');   
+        $("#unit").prop('disabled', false);
         $("#modal_add").modal("show");
     })
+
+    function showmodaladd(id_map, id_unit, id_auditor, nip){
+        $("#unit").val(id_unit);
+        // $("#unit").prop('disabled', 'disabled');
+        $("#id").val(id_map);
+        
+        $("#auditor").val(id_auditor);
+        $("#nip").val(nip)
+        // return false;
+        $("#modal_add").modal("show");
+    }
 
     $(document).ready(function () {
         $('#table_standart').DataTable();

@@ -179,7 +179,7 @@
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach --}}
                                         <option value="ketua">Ketua Auditor </option>
-                                        <option value="admin">Auditor </option>
+                                        <option value="auditor">Auditor </option>
                                     @error('role')
                                         </select>
                                     <span class="invalid-feedback" role="alert">

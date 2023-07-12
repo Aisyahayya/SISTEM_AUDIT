@@ -81,6 +81,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/daftarUnit', [App\Http\Controllers\UnitController::class, 'index'])->name('daftarUnit');
     Route::post('/tambahUnit', [App\Http\Controllers\UnitController::class, 'tambahUnit'])->name('tambahUnit');
     Route::get('/pageTambahUnit', [App\Http\Controllers\UnitController::class, 'pageTambahUnit'])->name('pageTambahUnit');
+    Route::delete('deleteunit/{id}',[App\Http\Controllers\UnitController::class, 'destroy'])->name('unit.delete');
 
 });
 
@@ -100,6 +101,7 @@ Route::group(['middleware' => ['role:ketua']], function () {
     Route::get('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'profile'])->name('ketua.profile');
     Route::post('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'update'])->name('ketua.update');
     Route::post('/ketua/prosesadd', [App\Http\Controllers\KetuaController::class, 'prosesadd'])->name('ketua.prosesadd');
+    Route::post('/destroymap', [App\Http\Controllers\KetuaController::class, 'destroymap'])->name('ketua.destroymap');
 
     //update profile
     //Route::post('/ketua/{user}/update/profile', [App\Http\Controllers\AuditeeController::class, 'update']);

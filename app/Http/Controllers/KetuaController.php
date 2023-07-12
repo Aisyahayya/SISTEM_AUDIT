@@ -10,9 +10,11 @@ use App\Models\Response;
 use App\Models\Standart;
 use App\Models\User;
 use App\Models\UnitAudit;
+use App\Models\Mappingunitaudit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KetuaController extends Controller
 {
@@ -27,6 +29,27 @@ class KetuaController extends Controller
         $select    = UnitAudit::all();
         $table     = UnitAudit::whereNotNull('id_auditor')
                         ->get();
+        
+        $table     = DB::select(
+            DB::raw(
+                'SELECT
+                    ua.id,
+                    ua.id_periode_audit,
+                    m.id_map,
+                    ua.nama_unit,
+                    u.name,
+                    u.email,
+                    m.id_auditor,
+                    u.nip
+                FROM
+                    unit_audits ua
+                    LEFT JOIN mapping_unit_auditor m ON ua.id = m.id_unit
+                    LEFT JOIN ( SELECT id as iduser, name, email,nip FROM users ) u ON m.id_auditor = u.iduser
+                WHERE 
+                    ua.id_auditor IS NOT NULL
+                ORDER BY nama_unit'
+                )
+        );
         // $unitAuditTable     = UnitAudit::where_not_null('id_auditor');
 
         // print_r($table);die;
@@ -338,23 +361,58 @@ class KetuaController extends Controller
     public function prosesadd(Request $request)
     {
 //        dd($request->all());
+// print_r($request->all());die;
         $data = $request->validate([
-            'unit' => 'required',
+            'id'      => '',
+            'unit'    => 'required',
             'auditor' => 'required',
-            'nip' => 'required|string',
-            
+            'nip'     => 'required|string',
         ]);
 
-        print_r($data);die;
+        // print_r($request->all());die;
+        if($data['id']){
+            //update
+            
+            // $map = Mappingunitaudit::find($data['id']);
+            // // print_r($data['id']);die;
+            // $map->id_unit    = $data['unit'];
+            // $map->id_auditor = $data['auditor'];
+            DB::table('mapping_unit_auditor')
+            ->where('id_map', $data['id'])
+            ->update(['id_unit' => $data['unit'], 'id_auditor' => $data['auditor']]);
+            // $map->save(); 
 
-        // $user = User::find($id);
-        // $user->name = $data['name'];
-        // $user->email = $data['email'];
-        // $user->fakultas = $data['fakultas'];
-        // $user->prodi = $data['prodi'];
-        // $user->save();
+            User::where('id',$data['auditor'])->update(['nip'=>$data['nip']]);
+        }else{
+            //add
+            $input['id_unit']    = $data['unit'];
+            $input['id_auditor'] = $data['auditor'];
+            // var_dump($input);die;
+            $map = Mappingunitaudit::create($input);
+            
+            $id = $map->id;
+            
+            User::where('id',$data['auditor'])->update(['nip'=>$data['nip']]);
+            UnitAudit::where('id',$data['unit'])->update(['id_auditor'=>$id]);
+        }
 
         return redirect()->route('ketua.dashboard')->with('success', 'Auditor Berhasil Ditambahkan.');
+    }
+
+    public function destroymap(Request $request)
+    {
+        // print_r($request->all());die;
+        // $auditor = User::findOrFail($id);
+        // $auditor->delete();
+        // print_r($request['id_map']);die;
+        $deleted = DB::table('mapping_unit_auditor')->where('id_map', $request['id_map'])->delete();
+
+        if($deleted){
+            return redirect()->route('ketua.dashboard')->with('success','Berhasil Menghapus data');
+        }else{
+            return redirect()->route('ketua.dashboard')->with('error','Gagal Menghapus data');
+        }
+        
     }
 
 

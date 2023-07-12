@@ -91,6 +91,11 @@
 
                                 <div class="col-md-6">
                                     <input id="ketua_tim" type="text" class="form-control" name="ketua_tim" required autofocus>
+                                    {{--<select id="ketua_tim" class="form-control @error('ketua_tim') is-invalid @enderror" name="ketua_tim" required autocomplete="new-selectKetua">
+                                        @foreach($selectKetua as $row)
+                                            <option value="{{ $row->id }}">{{ $row->name }}  </option>
+                                        @endforeach
+                                    </select>--}}
                                 </div>
                             </div>
 

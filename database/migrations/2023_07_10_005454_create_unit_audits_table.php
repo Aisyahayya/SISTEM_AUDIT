@@ -17,14 +17,14 @@ class CreateUnitAuditsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_periode_audit');
 //             $table->unsignedBigInteger('id_standar_ruang_lingkup');
-            $table->unsignedBigInteger('id_auditor');
+            $table->integer('id_auditor')->nullable()->unsigned();
             $table->string('nama_unit', 100);
             $table->date('tanggal_audit');
             $table->string('ketua_tim', 100);
             $table->string('nip_ketua_tim', 10);
             $table->foreign('id_periode_audit')->references('id')->on('periode_audits')->onDelete('cascade');
             // $table->foreign('id_standar_ruang_lingkup')->references('id')->on('standar_ruang_lingkups')->onDelete('cascade');
-            $table->foreign('id_auditor')->references('id')->on('users')->onDelete('no action');
+            // $table->foreign('id_auditor')->references('id')->on('users')->onDelete('no action');
             $table->timestamps();
         });
     }

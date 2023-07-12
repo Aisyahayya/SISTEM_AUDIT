@@ -37,7 +37,8 @@
     function deleteFunction() {
         event.preventDefault(); // prevent form submit
         var form = event.target.form; // storing the form
-
+        // console.log(form)
+        // return false
         swal.fire({
                 icon: "warning",
                 title: "Hapus Data?",
@@ -162,7 +163,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Periode Audit</th>
-                                <th>Standar Ruang Lingkup</th>
+                                <!-- <th>Standar Ruang Lingkup</th> -->
                                 <th>Nama Unit</th>
                                 <th>Tanggal Audit</th>
                                 <th>Ketua Tim</th>
@@ -175,14 +176,14 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$v->id_periode_audit}}</td>
-                                    <td>{{$v->id_standar_ruang_lingkup}}</td>
+                                    
                                     <td>{{$v->nama_unit}}</td>
                                     <td>{{$v->tanggal_audit}}</td>
                                     <td>{{$v->ketua_tim}}</td>
                                     <td>{{$v->nip_ketua_tim}}</td>
                                     <td class="text-center list-inline">
                                         <div class="d-inline-flex bd-highlight">
-                                        <form id="form" class="delete-form" action="{{ route('destroy',$v->id) }}"
+                                        <form id="form" class="delete-form" action="{{ route('unit.delete',$v->id) }}"
                                               method="POST">
                                             @csrf
                                             @method('DELETE')
