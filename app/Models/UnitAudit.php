@@ -24,5 +24,6 @@ class UnitAudit extends Model
         'tanggal_audit',
         'ketua_tim',
         'nip_ketua_tim',
+        'id_auditor'
     ];
 }

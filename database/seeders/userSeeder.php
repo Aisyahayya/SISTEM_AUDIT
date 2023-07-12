@@ -19,7 +19,7 @@ class userSeeder extends Seeder
             'email' => 'admin@admin.com',
             'fakultas' => 'Teknik',
             'prodi' => 'Sistem Informasi',
-            'password' => bcrypt('admin123')
+            'password' => bcrypt('admin123'),
         ]);
 
         $admin->assignRole('admin');
@@ -76,8 +76,5 @@ class userSeeder extends Seeder
             'password' => bcrypt('ketua123'),
             'role'  => "ketua"
         ]);
-
-        $ketua->assignRole('ketua');
-
     }
 }
