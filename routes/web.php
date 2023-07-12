@@ -50,6 +50,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     //    deleteUser
     Route::delete('/destroy/{id}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('destroy');
+    Route::delete('/destroyUser/{id}', [App\Http\Controllers\AdminController::class, 'destroyUser'])->name('destroyUser');
 
     //    tambahstandart
     Route::post('/tambahStandart', [App\Http\Controllers\StandartController::class, 'create'])->name('tambahStandart');
