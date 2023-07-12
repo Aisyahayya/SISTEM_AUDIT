@@ -17,4 +17,12 @@ class UnitAudit extends Model
     {
         return $this->hasMany(StandarRuangLingkup::class, 'id_unit_audit');
     }
+    protected $fillable = [
+        'id_periode_audit',
+        // 'id_standar_ruang_lingkup',
+        'nama_unit',
+        'tanggal_audit',
+        'ketua_tim',
+        'nip_ketua_tim',
+    ];
 }
