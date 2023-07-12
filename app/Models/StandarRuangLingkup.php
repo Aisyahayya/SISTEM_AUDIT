@@ -9,4 +9,16 @@ class StandarRuangLingkup extends Model
 {
     use HasFactory;
     protected $table = 'standar_ruang_lingkups';
+
+    protected $fillable = [
+        'unit',
+        'ruang_lingkup',
+        'parameter_ruang_lingkup',
+        'status',
+        'feedback',
+    ];
+
+    protected $hidden = [
+        'id',
+    ];
 }
