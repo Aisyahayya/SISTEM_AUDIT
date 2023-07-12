@@ -190,6 +190,207 @@
     </div>
 </div> --}}
 
+<div class="modal fade" id="modal_unggah" tabindex="-1" aria-labelledby="modal_unggah" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-capitalize" id="modal_unggah">Unggah File Auditee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/auditee/{{ auth()->id() }}/dataPendahuluan" method="post">
+                @csrf
+                <div class="modal-body">
+                    <form action="" method="post" id="form_unggah">
+                        <input type="hidden" id="id_ruang_lingkup" name="id_ruang_lingkup">
+                        <table class="table table-responsive table-stripper">
+                            <thead>
+                                <tr>
+                                    <th>Ruang Lingkup</th>
+                                    <th>Parameter</th>
+                                    <th>File Yang Diunggah Auditee</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Value Ruang Lingkup</td>
+                                    <td>value parameter</td>
+                                    <td>
+                                    
+                                        <input type="file" id="fileauditee"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_penilaian" tabindex="-1" aria-labelledby="modal_penilaian" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-capitalize" id="modal_penilaian">Penilaian</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" name="form_unggah" id="form_unggah" method="post">
+                @csrf
+                <div class="modal-body">
+                    <!-- <form action="" method="post" id="form_unggah"> -->
+                        <!-- <input type="hidden" id="id_ruang_lingkup" name="id_ruang_lingkup"> -->
+                        <div class="form-group row mb-3">
+                        <label for="kondisi_awal" class="col-md-0 col-form-label text-md-right">Kondisi Awal : </label>
+
+                        <div class="col-12">
+                            <textarea name="kondisi_awal" class="form-control @error('kondisi_awal') is-invalid @enderror" aria-describedby="kondisi_awal" id="kondisi_awal" rows="3"  >{{ $evaluasi->kondisi_awal ?? ''}}</textarea>
+                            @error('kondisi_awal')
+                                <div id="kondisi_awal" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="dasar_evaluasi" class="col-md-0 col-form-label text-md-right">Dasar Evaluasi :</label>
+
+                        <div class="col-12">
+                            <textarea name="dasar_evaluasi" class="form-control @error('dasar_evaluasi') is-invalid @enderror" aria-describedby="dasar_evaluasi" id="dasar_evaluasi" rows="3" >{{ $evaluasi->dasar_evaluasi ?? ''}}</textarea>
+                            @error('dasar_evaluasi')
+                                <div id="dasar_evaluasi" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="penyebab" class="col-md-0 col-form-label text-md-right">Penyebab : </label>
+
+                        <div class="col-12">
+                            <textarea name="penyebab" class="form-control @error('penyebab') is-invalid @enderror" aria-describedby="penyebab" id="penyebab" rows="3" >{{  $evaluasi->penyebab ?? ''}}</textarea>
+                            @error('penyebab')
+                                <div id="penyebab" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+ 
+
+                    <div class="form-group row mb-3">
+                        <label for="akibat" class="col-md-0 col-form-label text-md-right">Akibat : </label>
+
+                        <div class="col-12">
+                            <textarea name="akibat" class="form-control @error('akibat') is-invalid @enderror" aria-describedby="akibat" id="akibat" rows="3">{{  $evaluasi->akibat ?? ''}}</textarea>
+                            @error('akibat')
+                                <div id="akibat" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row mb-3">
+                        <label for="rekomendasi_followup" class="col-md-0 col-form-label text-md-right">Rekomendasi Follow-Up : </label>
+
+                        <div class="col-12">
+                            <textarea name="rekomendasi_followup" class="form-control @error('rekomendasi_followup') is-invalid @enderror" aria-describedby="rekomendasi_followup" id="rekomendasi_followup" rows="3" >{{ $evaluasi->rekomendasi_followup ?? '' }}</textarea>
+                            @error('rekomendasi_followup')
+                                <div id="rekomendasi_followup" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                        
+                    </div>
+
+            
+            </div>
+                    <!-- </form> -->
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_feedback" tabindex="-1" aria-labelledby="modal_feedback" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-capitalize" id="modal_feedback">Feedback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" name="form_unggah" id="form_unggah" method="post">
+                @csrf
+                <div class="modal-body">
+                    <!-- <form action="" method="post" id="form_unggah"> -->
+                        <!-- <input type="hidden" id="id_ruang_lingkup" name="id_ruang_lingkup"> -->
+                       
+                        <div class="form-group row mb-3">
+                        <label for="komentar" class="col-md-0 col-form-label text-md-right">Komentar/Klarifikasi : </label>
+
+                        <div class="col-12">
+                            <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" aria-describedby="komentar" id="komentar" rows="3"  disabled>{{ $evaluasi->komentar ?? ''}}</textarea>
+                            @error('komentar')
+                                <div id="komentar" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="tindak_lanjut" class="col-md-0 col-form-label text-md-right">Tindak Lanjut Temuan :</label>
+
+                        <div class="col-12">
+                            <textarea name="tindak_lanjut" class="form-control @error('tindak_lanjut') is-invalid @enderror" aria-describedby="tindak_lanjut" id="tindak_lanjut" rows="3" disabled>{{ $evaluasi->tindak_lanjut ?? ''}}</textarea>
+                            @error('tindak_lanjut')
+                                <div id="tindak_lanjut" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="tanggal_kesanggupan" class="col-md-0 col-form-label text-md-right">Tanggal Kesanggupan : </label>
+
+                        <div class="col-12">
+                            <input type="date" name="tanggal_kesanggupan" class="form-control @error('tanggal_kesanggupan') is-invalid @enderror" aria-describedby="tanggal_kesanggupan" id="tanggal_kesanggupan" rows="3" disabled>{{  $evaluasi->tanggal_kesanggupan ?? ''}}</textarea>
+                            @error('tanggal_kesanggupan')
+                                <div id="tanggal_kesanggupan" class="invalid-feedback">
+                                    Deskripsi wajib diisi
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {{--container--}}
 <div class="container-fluid">
     <div class="row mt-3">
@@ -235,7 +436,7 @@
                 <div class="tab-pane fade show active" id="format_soal" role="tabpanel" aria-labelledby="format_soal-tab">
                     <div class="card-body">
                         <div class="table-container">
-                            <table class="table" id="daftarSoal">
+                            <!-- <table class="table" id="daftarSoal">
                                 <thead class="bg-secondary text-white">
                                     <tr>
                                         <th>Upload Setup File</th>
@@ -255,12 +456,56 @@
                                         </td>
                                     </tr>
                                 </tbody>
+                            </table> -->
+
+                            <table id="table_standart" class="table table-striped text-center table-bordered">
+                                <thead>
+                                <tr class="border-bottom">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Ruang Lingkup</th>
+                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Penilaian</th>
+                                    <th scope="col">Feedback</th>
+                                </tr>
+                                </thead> 
+                                <tbody>
+                                   
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Prodi IF</td>
+                                            <td>Pembiatyaan</td>
+                                            <td>
+                                                <button class="btn btn-success" onclick="modal_unggah()">isi</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success" onclick="modal_penilaian()">Lihat</button> | 
+                                                <button class="btn btn-success">Cetak</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success" onclick="modal_feedback()">isi</button>
+                                            </td>
+                                            <!-- <td class="text-center list-inline">
+                                                <div class="d-inline-flex bd-highlight">
+                                                <button class="btn btn-outline-success btn-sm">edit</button>
+                                                <form id="form" class="delete-form" action="{{ route('ketua.destroymap') }}"
+                                                    method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="id_map" value="">
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteFunction()">Hapus</button>
+                                                </form>
+                                                </div>
+                                            </td> -->
+                                        </tr>
+                                    
+                                    </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#kirimsetupfile">Submit</button>
+            <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#kirimsetupfile">Submit</button> -->
             {{-- <div class="card mb-3 p-2">
                 <div class="body">
                     <div class="d-flex flex-row bd-highlight">
@@ -373,6 +618,18 @@
     $(document).ready(function () {
         $('#table_standart').DataTable();
     });
+
+    function modal_unggah(){
+        $("#modal_unggah").modal("show")
+    }
+
+    function modal_penilaian(){
+        $("#modal_penilaian").modal("show")
+    }
+
+    function modal_feedback(){
+        $("#modal_feedback").modal("show")
+    }
 </script>
 
 @include('layouts.global-script')
