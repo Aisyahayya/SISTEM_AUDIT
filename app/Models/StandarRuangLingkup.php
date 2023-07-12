@@ -12,6 +12,7 @@ class StandarRuangLingkup extends Model
 
     protected $fillable = [
         'unit',
+        'id_auditee',
         'ruang_lingkup',
         'parameter_ruang_lingkup',
         'status',

@@ -145,6 +145,7 @@
                     <tr>
                         <th>No</th>
                         <th>Unit</th>
+                        <th>Auditee</th>
                         <th>Ruang Lingkup</th>
                         <th>Parameter Ruang Lingkup</th>
                         <th>Status</th>
@@ -157,13 +158,14 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $d->unit }}</td>
+                            <td>{{ $d->id_auditee }}</td>
                             <td>{{ $d->ruang_lingkup }}</td>
                             <td>{{ $d->parameter_ruang_lingkup }}</td>
                             <td>{{ $d->status }}</td>
                             {{-- AKSI --}}
                             <td class="text-center">
                                 <a href={{route('detailStandarRuangLingkup',$d->id)}}>
-                                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="popover" title="Lihat Detail Standar Ruang Lingkup">
+                                    <button class="btn btn-outline-success btn-sm" data-bs-toggle="popover" title="Lihat Detail & Evaluasi">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                         </svg>
@@ -182,7 +184,7 @@
                             </td>
                             {{-- FEEDBACK --}}
                             <td class="text-center">
-                                <a href="/"><button class="btn btn-outline-success btn-sm" data-bs-toggle="popover" title="Lihat Feedback Auditee">
+                                <a href={{route('feedback',$d->id)}}><button class="btn btn-outline-success btn-sm" data-bs-toggle="popover" title="Lihat Feedback Auditee">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                         </svg>

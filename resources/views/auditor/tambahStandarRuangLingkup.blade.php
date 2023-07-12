@@ -156,7 +156,25 @@
                                 <label for="unit" class="col-md-4 col-form-label text-md-right">{{ __('Unit') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="unit" type="text" class="form-control" name="unit" autofocus required>
+                                    {{-- <input id="unit" type="text" class="form-control" name="unit" autofocus required> --}}
+                                    <select id="unit" class="form-control @error('unit') is-invalid @enderror" name="unit" required autocomplete="new-unit">
+                                        @foreach($unit as $row)
+                                            <option value="{{ $row->id }}">{{ $row->nama_unit }}  </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mt-3 mb-3">
+                                <label for="id_auditee" class="col-md-4 col-form-label text-md-right">{{ __('Auditee') }}</label>
+
+                                <div class="col-md-6">
+                                    {{-- <input id="id_auditee" type="text" class="form-control" name="id_auditee" autofocus required> --}}
+                                    <select id="id_auditee" class="form-control @error('id_auditee') is-invalid @enderror" name="id_auditee" required autocomplete="new-id_auditee">
+                                        @foreach($auditee as $row)
+                                            <option value="{{ $row->id }}">{{ $row->name }}  </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -172,7 +190,7 @@
                                 <label for="parameter_ruang_lingkup" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Ruang Lingkup') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="parameter_ruang_lingkup" type="text" class="form-control" name="parameter_ruang_lingkup" autofocus required>
+                                    <textarea id="parameter_ruang_lingkup" type="text" class="form-control" name="parameter_ruang_lingkup" autofocus required></textarea>
                                 </div>
                             </div>
                             
