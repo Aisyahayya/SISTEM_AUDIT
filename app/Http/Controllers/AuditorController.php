@@ -316,14 +316,14 @@ class AuditorController extends Controller
     {
         $request->validate([
             'unit'                           =>      'required|string',
-            'auditee'                        =>      'required|string',
+            'id_auditee'                     =>      'required|string',
             'ruang_lingkup'                  =>      'required|string',
             'parameter_ruang_lingkup'        =>      'required|string',
         ]);
 
         $srl = StandarRuangLingkup::create([
             'unit' => $request['unit'],
-            'auditee' => $request['auditee'],
+            'id_auditee' => $request['id_auditee'],
             'ruang_lingkup' => $request['ruang_lingkup'],
             'parameter_ruang_lingkup' => $request['parameter_ruang_lingkup'],
             'status' => 'Belum Teraudit'

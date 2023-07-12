@@ -158,7 +158,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $d->unit }}</td>
-                            <td>{{ $d->auditee }}</td>
+                            <td>{{ $d->id_auditee }}</td>
                             <td>{{ $d->ruang_lingkup }}</td>
                             <td>{{ $d->parameter_ruang_lingkup }}</td>
                             <td>{{ $d->status }}</td>

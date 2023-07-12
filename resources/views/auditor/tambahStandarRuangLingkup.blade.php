@@ -166,11 +166,11 @@
                             </div>
 
                             <div class="form-group row mt-3 mb-3">
-                                <label for="auditee" class="col-md-4 col-form-label text-md-right">{{ __('Auditee') }}</label>
+                                <label for="id_auditee" class="col-md-4 col-form-label text-md-right">{{ __('Auditee') }}</label>
 
                                 <div class="col-md-6">
-                                    {{-- <input id="auditee" type="text" class="form-control" name="auditee" autofocus required> --}}
-                                    <select id="auditee" class="form-control @error('auditee') is-invalid @enderror" name="auditee" required autocomplete="new-auditee">
+                                    {{-- <input id="id_auditee" type="text" class="form-control" name="id_auditee" autofocus required> --}}
+                                    <select id="id_auditee" class="form-control @error('id_auditee') is-invalid @enderror" name="id_auditee" required autocomplete="new-id_auditee">
                                         @foreach($auditee as $row)
                                             <option value="{{ $row->id }}">{{ $row->name }}  </option>
                                         @endforeach
