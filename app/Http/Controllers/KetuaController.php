@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\Response;
 use App\Models\Standart;
 use App\Models\User;
+use App\Models\UnitAudit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,9 +23,24 @@ class KetuaController extends Controller
      */
     public function index()
     {
-        $auditor = User::role('auditor')->get();
+        $auditor   = User::role('auditor')->get();
+        $select    = UnitAudit::all();
+        $table     = UnitAudit::whereNotNull('id_auditor')
+                        ->get();
+        // $unitAuditTable     = UnitAudit::where_not_null('id_auditor');
 
-        return view('ketua.dashboard', compact('auditor'));
+        // print_r($table);die;
+
+        // $result = array(
+        //     "auditor" => compact('auditor'),
+        //     "select"  => $select,
+        //     "table"   => $table
+        // ); 
+        // print_r($unitAudit);die;
+        // print_r(compact('auditor'));die;
+        
+
+        return view('ketua.dashboard', array("auditor" => $auditor, "unitSelect" => $select, "table" => $table) );
 //         $filter = Carbon::now()->format('Y');
 
 //         $uid = Auth::id();
@@ -317,6 +333,28 @@ class KetuaController extends Controller
 
         // Memberikan umpan balik kepada pengguna
         return redirect()->route('ketua.dashboard')->with('success', 'Data berhasil disimpan');
+    }
+
+    public function prosesadd(Request $request)
+    {
+//        dd($request->all());
+        $data = $request->validate([
+            'unit' => 'required',
+            'auditor' => 'required',
+            'nip' => 'required|string',
+            
+        ]);
+
+        print_r($data);die;
+
+        // $user = User::find($id);
+        // $user->name = $data['name'];
+        // $user->email = $data['email'];
+        // $user->fakultas = $data['fakultas'];
+        // $user->prodi = $data['prodi'];
+        // $user->save();
+
+        return redirect()->route('ketua.dashboard')->with('success', 'Auditor Berhasil Ditambahkan.');
     }
 
 

@@ -29,7 +29,8 @@ class userSeeder extends Seeder
             'email' => 'si@si.com',
             'fakultas' => 'Teknik',
             'prodi' => 'Sistem Informasi',
-            'password' => bcrypt('user123')
+            'password' => bcrypt('user123'),
+            'role'  => "auditee"
         ]);
 
         $auditee1->assignRole('auditee');
@@ -39,7 +40,8 @@ class userSeeder extends Seeder
             'email' => 'ti@ti.com',
             'fakultas' => 'Teknik',
             'prodi' => 'Teknik Informatika',
-            'password' => bcrypt('user123')
+            'password' => bcrypt('user123'),
+            'role'  => "auditee"
         ]);
 
         $auditee2->assignRole('auditee');
@@ -49,17 +51,30 @@ class userSeeder extends Seeder
             'email' => 'auditor@auditor.com',
             'fakultas' => 'Teknik',
             'prodi' => 'Sistem Informasi',
-            'password' => bcrypt('auditor123')
+            'password' => bcrypt('auditor123'),
+            'role'  => "auditor"
         ]);
 
         $auditor->assignRole('auditor');
+
+        $auditor2 = User::create([
+            'name' => 'auditor2',
+            'email' => 'auditor2@auditor.com',
+            'fakultas' => 'Teknik',
+            'prodi' => 'Mesin',
+            'password' => bcrypt('auditor123'),
+            'role'  => "auditor"
+        ]);
+
+        $auditor2->assignRole('auditor');
 
         $ketua = User::create([
             'name' => 'ketua',
             'email' => 'ketua@ketua.com',
             'fakultas' => 'Teknik',
             'prodi' => 'Sistem Informasi',
-            'password' => bcrypt('ketua123')
+            'password' => bcrypt('ketua123'),
+            'role'  => "ketua"
         ]);
 
         $ketua->assignRole('ketua');

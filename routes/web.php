@@ -99,6 +99,7 @@ Route::group(['middleware' => ['role:ketua']], function () {
     //Profile
     Route::get('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'profile'])->name('ketua.profile');
     Route::post('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'update'])->name('ketua.update');
+    Route::post('/ketua/prosesadd', [App\Http\Controllers\KetuaController::class, 'prosesadd'])->name('ketua.prosesadd');
 
     //update profile
     //Route::post('/ketua/{user}/update/profile', [App\Http\Controllers\AuditeeController::class, 'update']);
