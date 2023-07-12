@@ -184,6 +184,62 @@
     </div>
 </div> --}}
 
+<div class="modal fade" id="modal_add" tabindex="-1" aria-labelledby="modalPendahuluan" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-capitalize" id="modalPendahuluan">Tambah Auditor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('ketua.prosesadd')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="unit" class="col-sm-5 col-form-label">Unit</label>
+                        <div class="col-1"> :</div>
+                        <div class="col-sm-6">
+                            <input type="text" name="unit" class="form-control @error('unit') is-invalid @enderror" id="unit">
+                            @error('unit')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="auditor" class="col-sm-5 col-form-label">Auditor</label>
+                        <div class="col-1"> :</div>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="auditor" id="auditor">
+                                @foreach($auditor as $v)
+                                <option value="{{$v->id}}">{{$v->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="dosen_aktif" class="col-sm-5 col-form-label">NIP</label>
+                        <div class="col-1"> :</div>
+                        <div class="col-sm-6">
+                            <input type="number" name="nip" class="form-control @error('nip') is-invalid @enderror" id="nip">
+                            @error('nip')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {{--container--}}
 <div class="container-fluid">
     <div class="row mt-3">
@@ -244,6 +300,12 @@
 
                 </div>
 
+            </div>
+            
+            <div style="padding: 20px!important;">
+                <center>
+                    <span class="btn btn-success" id="add_auditor">Tambah Auditor</span>
+                </center>
             </div>
             </div><!-- End Recent Sales -->
             <!--
@@ -387,6 +449,10 @@
     //     })
 
     // }
+
+    $("#add_auditor").on("click", function(){
+        $("#modal_add").modal("show");
+    })
 
     $(document).ready(function () {
         $('#table_standart').DataTable();

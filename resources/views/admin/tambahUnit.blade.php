@@ -33,58 +33,7 @@
 <div class="container-fluid">
     <div class="row mt-3">
         <div class="col">
-{{--            SIDEBAR--}}
-            <div id="side-bar" class="flex-shrink-0 ps-3 pt-3 bg-white overflow-auto" style="width: 180px;">
-                <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                            Set Up
-                        </button>
-                        <div class="collapse show" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li class="fw-bold"><a href="{{route('admin.dashboard')}}" class="link-dark rounded">Periode</a></li>
-                                <li><a href="{{route('daftarUnit')}}" class="link-dark rounded">Unit Audit</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            Auditee
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="{{route('admin.dashboardAuditee')}}" class="link-dark rounded">Data</a></li>
-                                <li class="fw-bold"><a href="{{route('pageTambahAuditee')}}" class="link-dark rounded">Tambah Auditee</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                            Auditor
-                        </button>
-                        <div class="collapse" id="orders-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="{{route('admin.dashboardAuditor')}}" class="link-dark rounded">Data</a></li>
-                                <li><a href="{{route('pageTambahAuditor')}}" class="link-dark rounded">Tambah Auditor</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <!--
-{{--                    <li class="border-top my-3"></li>--}}
-{{--                    <li class="mb-1">--}}
-{{--                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">--}}
-{{--                            Pengumuman--}}
-{{--                        </button>--}}
-{{--                        <div class="collapse" id="account-collapse">--}}
-{{--                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">--}}
-{{--                                <li><a href="#" class="link-dark rounded">Data</a></li>--}}
-{{--                                <li><a href="#" class="link-dark rounded">Tambah Pengumuman</a></li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </li>--}} -->
-                </ul>
-            </div>
+            @include('layouts.sidebar',['activePage' => 'unitAudit'])
         </div> 
         <div class="col-10 border-start">
 {{--            CONTENT--}}
@@ -104,17 +53,22 @@
                                 <label for="id_periode_audit" class="col-md-4 col-form-label text-md-right">{{ __('ID Periode Audit') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="id_periode_audit" type="text" class="form-control" name="id_periode_audit" autofocus required>
+                                    {{-- <input id="id_periode_audit" type="text" class="form-control" name="id_periode_audit" autofocus required> --}}
+                                    <select id="id_periode_audit" class="form-control @error('id_periode_audit') is-invalid @enderror" name="id_periode_audit" required autocomplete="new-periodeAudit">
+                                        @foreach($periodeAudit as $periodeAudit)
+                                            <option value="{{ $periodeAudit->id }}">{{ $periodeAudit->tanggal_awal_audit }} - {{ $periodeAudit->tanggal_akhir_audit }} </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="form-group row mt-3 mb-3">
+                            {{-- <div class="form-group row mt-3 mb-3">
                                 <label for="id_standar_ruang_lingkup" class="col-md-4 col-form-label text-md-right">{{ __('Standar Ruang Lingkup') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="id_standar_ruang_lingkup" type="text" class="form-control" name="id_standar_ruang_lingkup" autofocus required>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group row mt-3 mb-3">
                                 <label for="nama_unit" class="col-md-4 col-form-label text-md-right">{{ __('Nama Unit') }}</label>
