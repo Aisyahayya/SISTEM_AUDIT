@@ -100,26 +100,7 @@
         </div>
         
         <div class="col">
-            <hr>
-            <div class="card p-3">
-                <table id="table_standart" class="table table-striped text-center table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Ruang Lingkup</th>
-                        <th>Parameter Ruang Lingkup</th>
-                        <th>File Diunggah Auditee</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $standarRuangLingkup->ruang_lingkup }}</td>
-                            <td>{{ $standarRuangLingkup->parameter_ruang_lingkup }}</td>
-                            <td>{{ $standarRuangLingkup->status || ''}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <h2 class="text-center">Hasil Evaluasi</h2>
+            <h2 class="text-center">Feedback</h2>
             <hr>
             <div class="card p-3">
                 {{-- <form method="POST" action={{ route('updateEvaluasi', ['id' => $evaluasi->id]) }}> --}}
@@ -134,12 +115,12 @@
                             @method('PUT')
                         @endif --}}
                     <div class="form-group row mb-3">
-                        <label for="kondisi_awal" class="col-md-0 col-form-label text-md-right">Kondisi Awal : </label>
+                        <label for="komentar" class="col-md-0 col-form-label text-md-right">Komentar/Klarifikasi : </label>
 
                         <div class="col-12">
-                            <textarea name="kondisi_awal" class="form-control @error('kondisi_awal') is-invalid @enderror" aria-describedby="kondisi_awal" id="kondisi_awal" rows="3"  >{{ $evaluasi->kondisi_awal ?? ''}}</textarea>
-                            @error('kondisi_awal')
-                                <div id="kondisi_awal" class="invalid-feedback">
+                            <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" aria-describedby="komentar" id="komentar" rows="3"  disabled>{{ $evaluasi->komentar ?? ''}}</textarea>
+                            @error('komentar')
+                                <div id="komentar" class="invalid-feedback">
                                     Deskripsi wajib diisi
                                 </div>
                             @enderror
@@ -147,12 +128,12 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="dasar_evaluasi" class="col-md-0 col-form-label text-md-right">Dasar Evaluasi :</label>
+                        <label for="tindak_lanjut" class="col-md-0 col-form-label text-md-right">Tindak Lanjut Temuan :</label>
 
                         <div class="col-12">
-                            <textarea name="dasar_evaluasi" class="form-control @error('dasar_evaluasi') is-invalid @enderror" aria-describedby="dasar_evaluasi" id="dasar_evaluasi" rows="3" >{{ $evaluasi->dasar_evaluasi ?? ''}}</textarea>
-                            @error('dasar_evaluasi')
-                                <div id="dasar_evaluasi" class="invalid-feedback">
+                            <textarea name="tindak_lanjut" class="form-control @error('tindak_lanjut') is-invalid @enderror" aria-describedby="tindak_lanjut" id="tindak_lanjut" rows="3" disabled>{{ $evaluasi->tindak_lanjut ?? ''}}</textarea>
+                            @error('tindak_lanjut')
+                                <div id="tindak_lanjut" class="invalid-feedback">
                                     Deskripsi wajib diisi
                                 </div>
                             @enderror
@@ -160,55 +141,22 @@
                     </div>
 
                     <div class="form-group row mb-3">
-                        <label for="penyebab" class="col-md-0 col-form-label text-md-right">Penyebab : </label>
+                        <label for="tanggal_kesanggupan" class="col-md-0 col-form-label text-md-right">Tanggal Kesanggupan : </label>
 
                         <div class="col-12">
-                            <textarea name="penyebab" class="form-control @error('penyebab') is-invalid @enderror" aria-describedby="penyebab" id="penyebab" rows="3" >{{  $evaluasi->penyebab ?? ''}}</textarea>
-                            @error('penyebab')
-                                <div id="penyebab" class="invalid-feedback">
+                            <input type="date" name="tanggal_kesanggupan" class="form-control @error('tanggal_kesanggupan') is-invalid @enderror" aria-describedby="tanggal_kesanggupan" id="tanggal_kesanggupan" rows="3" disabled>{{  $evaluasi->tanggal_kesanggupan ?? ''}}</textarea>
+                            @error('tanggal_kesanggupan')
+                                <div id="tanggal_kesanggupan" class="invalid-feedback">
                                     Deskripsi wajib diisi
                                 </div>
                             @enderror
                         </div>
                     </div>
-
- 
-
-                    <div class="form-group row mb-3">
-                        <label for="akibat" class="col-md-0 col-form-label text-md-right">Akibat : </label>
-
-                        <div class="col-12">
-                            <textarea name="akibat" class="form-control @error('akibat') is-invalid @enderror" aria-describedby="akibat" id="akibat" rows="3">{{  $evaluasi->akibat ?? ''}}</textarea>
-                            @error('akibat')
-                                <div id="akibat" class="invalid-feedback">
-                                    Deskripsi wajib diisi
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group row mb-3">
-                        <label for="rekomendasi_followup" class="col-md-0 col-form-label text-md-right">Rekomendasi Follow-Up : </label>
-
-                        <div class="col-12">
-                            <textarea name="rekomendasi_followup" class="form-control @error('rekomendasi_followup') is-invalid @enderror" aria-describedby="rekomendasi_followup" id="rekomendasi_followup" rows="3" >{{ $evaluasi->rekomendasi_followup ?? '' }}</textarea>
-                            @error('rekomendasi_followup')
-                                <div id="rekomendasi_followup" class="invalid-feedback">
-                                    Deskripsi wajib diisi
-                                </div>
-                            @enderror
-                        </div>
-                        <input type="hidden" name="standar_ruang_lingkup_id" value={{ $standarRuangLingkup->id }} id="standar_ruang_lingkup_id" />
-                    </div>
-
-            
             </div>
             <div class="row pt-3 mb-4">
-                        <div class="col-auto pe-0">
+                        {{-- <div class="col-auto pe-0">
                             <button type="submit" class="btn btn-success">{{ $evaluasi->kondisi_awal ?? '' === '' ? "Tambah" : "Simpan" }}</button>
-                        </div>
+                        </div> --}}
                         <div class="col-auto">
                             <a href="{{ url()->previous() }}">
                                 <button type="button" class="btn btn-secondary"> {{ __('Kembali') }}</button>

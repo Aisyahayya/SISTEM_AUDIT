@@ -15,11 +15,13 @@ class CreateStandarRuangLingkupsTable extends Migration
     {
         Schema::create('standar_ruang_lingkups', function (Blueprint $table) {
             $table->bigIncrements('id');
+            // $table->unsignedBigInteger('feedback_id');
+            // $table->foreign('feedback_id')->references('id')->on('feedbacks')->onDelete('cascade');
+            $table->integer('id_auditee')->nullable()->unsigned();
             $table->string('unit');
             $table->string('ruang_lingkup');
             $table->text('parameter_ruang_lingkup');
             $table->string('status');
-            $table->string('feedback');
             $table->timestamps();
         });
     }
