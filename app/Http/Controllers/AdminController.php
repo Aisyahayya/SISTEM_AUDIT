@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\Standart;
 use App\Models\PeriodeAudit;
 use App\Models\UnitAudit;
+use App\Models\Role;
 
 use Illuminate\Support\Facades\DB;
 use app\Models\User;
@@ -49,7 +50,10 @@ class AdminController extends Controller
 
     public function pageTambahAuditor()
     {
-        return view('admin.tambahAuditor');
+        $roles = Role::all();
+        // return view('nama_tampilan')->with('roles', $roles);
+
+        return view('admin.tambahAuditor')->with('roles', $roles);
     }
 
     public function dashboardUnitAudit(UnitAudit $unitAudit)
@@ -180,9 +184,11 @@ class AdminController extends Controller
             'prodi'             =>      'required|string',
             'email'             =>      'required|email|unique:users,email',
             'password'          =>      'required|alpha_num|min:6',
+            'role'              =>      'required|string',
         ]);
 
-//        dd($request->all());
+    //    print_r($request->all());
+    //    die;
 
         $user = User::create([
             'name' => ucwords($request['name']),
@@ -190,8 +196,10 @@ class AdminController extends Controller
             'prodi' => $request['prodi'],
             'email' => $request['email'],
             'password' => bcrypt($request['password'])
+            // 'role' => $request['role']
         ]);
 
+        // $user->assignRole($request['role']);
         $user->assignRole('auditor');
 
         if(!is_null($user)) {
@@ -277,6 +285,13 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $periode = PeriodeAudit::findOrFail($id);
+        $periode->delete();
+
+        return redirect()->back()->with('success','Berhasil Menghapus data');
+    }
+    public function destroyUser($id)
+    {
+        $periode = User::findOrFail($id);
         $periode->delete();
 
         return redirect()->back()->with('success','Berhasil Menghapus data');
