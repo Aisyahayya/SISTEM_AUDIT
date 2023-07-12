@@ -108,7 +108,7 @@
 {{--                            </ul>--}}
 {{--                        </div>--}}
 {{--                    </li>--}}
-
+{{-- 
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                                 data-bs-target="#profile-collapse" aria-expanded="false">
@@ -131,7 +131,7 @@
                                 <li><a href="{{ route('auditor.profile') }}" class="link-dark rounded">Data</a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
@@ -148,27 +148,33 @@
                 <hr>
                 <div class="card mt-4 mb-3">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('tambahStandarRuangLingkup') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('tambahSRL') }}" enctype="multipart/form-data">
                             @csrf
                             
 
                             <div class="form-group row mt-3 mb-3">
-                                <label for="no_sk_tugas_audit" class="col-md-4 col-form-label text-md-right">{{ __('Nama Standar') }}</label>
+                                <label for="unit" class="col-md-4 col-form-label text-md-right">{{ __('Unit') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="no_sk_tugas_audit" type="text" class="form-control" name="no_sk_tugas_audit" autofocus required>
+                                    <input id="unit" type="text" class="form-control" name="unit" autofocus required>
                                 </div>
                             </div>
-
 
                             <div class="form-group row mt-3 mb-3">
-                                <label for="ketua_spi" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Standar') }}</label>
+                                <label for="ruang_lingkup" class="col-md-4 col-form-label text-md-right">{{ __('Ruang Lingkup') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="ketua_spi" type="text" class="form-control" name="ketua_spi" required autofocus>
+                                    <input id="ruang_lingkup" type="text" class="form-control" name="ruang_lingkup" autofocus required>
                                 </div>
                             </div>
 
+                            <div class="form-group row mt-3 mb-3">
+                                <label for="parameter_ruang_lingkup" class="col-md-4 col-form-label text-md-right">{{ __('Parameter Ruang Lingkup') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="parameter_ruang_lingkup" type="text" class="form-control" name="parameter_ruang_lingkup" autofocus required>
+                                </div>
+                            </div>
                             
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
