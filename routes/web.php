@@ -81,6 +81,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/daftarUnit', [App\Http\Controllers\UnitController::class, 'index'])->name('daftarUnit');
     Route::post('/tambahUnit', [App\Http\Controllers\UnitController::class, 'tambahUnit'])->name('tambahUnit');
     Route::get('/pageTambahUnit', [App\Http\Controllers\UnitController::class, 'pageTambahUnit'])->name('pageTambahUnit');
+    Route::delete('deleteunit/{id}',[App\Http\Controllers\UnitController::class, 'destroy'])->name('unit.delete');
 
 });
 
@@ -100,6 +101,7 @@ Route::group(['middleware' => ['role:ketua']], function () {
     Route::get('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'profile'])->name('ketua.profile');
     Route::post('/ketua/profile', [App\Http\Controllers\KetuaController::class, 'update'])->name('ketua.update');
     Route::post('/ketua/prosesadd', [App\Http\Controllers\KetuaController::class, 'prosesadd'])->name('ketua.prosesadd');
+    Route::post('/destroymap', [App\Http\Controllers\KetuaController::class, 'destroymap'])->name('ketua.destroymap');
 
     //update profile
     //Route::post('/ketua/{user}/update/profile', [App\Http\Controllers\AuditeeController::class, 'update']);
@@ -138,6 +140,10 @@ Route::group(['middleware' => ['role:auditee']], function () {
 
     // respon
     Route::get('/auditee/{standart}/respons/', [App\Http\Controllers\ResponsController::class, 'index']);
+    Route::post('/loadevaluasi', [App\Http\Controllers\AuditeeController::class, 'loadpenilaian']);
+    Route::post('/savefeedback', [App\Http\Controllers\AuditeeController::class, 'savefeedback']);
+    Route::post('/loadfeedback', [App\Http\Controllers\AuditeeController::class, 'loadfeedback']);
+    Route::post('/uploadFile',[App\Http\Controllers\AuditeeController::class, 'uploadFile']);
 });
 
 Route::group(['middleware' => ['role:auditor']], function () {
@@ -193,6 +199,12 @@ Route::group(['middleware' => ['role:auditor']], function () {
     Route::post('/tambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'tambahStandarRuangLingkup'])->name('tambahStandarRuangLingkup');
     Route::get('/pageTambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'pageTambahStandarRuangLingkup'])->name('pageTambahStandarRuangLingkup');
 
+    Route::post('/tambahStandarRuangLingkup', [App\Http\Controllers\AuditorController::class, 'tambahSRL'])->name('tambahSRL');
+    Route::get('/auditor/detailStandarRuangLingkup/{id}', [App\Http\Controllers\AuditorController::class, 'detailStandarRuangLingkup'])->name('detailStandarRuangLingkup');
+    Route::get('/auditor/feedback/{id}', [App\Http\Controllers\AuditorController::class, 'feedback'])->name('feedback');
+    Route::post('/tambahEvaluasi', [App\Http\Controllers\AuditorController::class, 'tambahEvaluasi'])->name('tambahEvaluasi');
+    Route::put('/updateEvaluasi/{id}', [App\Http\Controllers\AuditorController::class, 'updateEvaluasi'])->name('updateEvaluasi');
+    
 });
 
 Route::get('/route-cache', function() {

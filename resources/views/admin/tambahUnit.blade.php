@@ -50,7 +50,7 @@
                         <form method="POST" action="{{ route('tambahUnit') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row mt-3 mb-3">
-                                <label for="id_periode_audit" class="col-md-4 col-form-label text-md-right">{{ __('ID Periode Audit') }}</label>
+                                <label for="id_periode_audit" class="col-md-4 col-form-label text-md-right">{{ __('Periode Audit') }}</label>
 
                                 <div class="col-md-6">
                                     {{-- <input id="id_periode_audit" type="text" class="form-control" name="id_periode_audit" autofocus required> --}}
@@ -91,6 +91,11 @@
 
                                 <div class="col-md-6">
                                     <input id="ketua_tim" type="text" class="form-control" name="ketua_tim" required autofocus>
+                                    {{--<select id="ketua_tim" class="form-control @error('ketua_tim') is-invalid @enderror" name="ketua_tim" required autocomplete="new-selectKetua">
+                                        @foreach($selectKetua as $row)
+                                            <option value="{{ $row->id }}">{{ $row->name }}  </option>
+                                        @endforeach
+                                    </select>--}}
                                 </div>
                             </div>
 

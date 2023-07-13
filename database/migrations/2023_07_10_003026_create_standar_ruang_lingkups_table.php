@@ -15,10 +15,14 @@ class CreateStandarRuangLingkupsTable extends Migration
     {
         Schema::create('standar_ruang_lingkups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_setup_file');
-            $table->foreign('id_setup_file')->references('id')->on('setup_files')->onDelete('cascade');
-            $table->string('nama_ruang_lingkup', 100);
-            $table->text('deskripsi_ruang_lingkup', 255);
+            // $table->unsignedBigInteger('feedback_id');
+            // $table->foreign('feedback_id')->references('id')->on('feedbacks')->onDelete('cascade');
+            $table->integer('id_auditee')->nullable()->unsigned();
+            $table->string('unit');
+            $table->string('file_auditee');
+            $table->string('ruang_lingkup');
+            $table->text('parameter_ruang_lingkup');
+            $table->string('status');
             $table->timestamps();
         });
     }

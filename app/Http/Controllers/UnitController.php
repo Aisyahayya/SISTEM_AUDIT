@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\PeriodeAudit;
 use App\Models\UnitAudit;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 
 class UnitController extends Controller
 {
@@ -23,18 +25,40 @@ class UnitController extends Controller
 
         $unitAudit = UnitAudit::all();
 
-        return view('admin.dashboardUnitAudit', compact('unitAudit'));
+        // $results = DB::select( 
+        //     DB::raw("   SELECT
+        //                     * 
+        //                 FROM
+        //                     unit_audits u
+        //                 LEFT JOIN (
+        //                     SELECT name,id as iduser 
+        //                     FROM
+        //                         users 
+        //                     ) us ON us.iduser = u.ketua_tim"
+        //             ) 
+        // );
+
+        return view('admin.dashboardUnitAudit', array("unitAudit" => $unitAudit));
     }
 
     public function pageTambahUnit()
     {
         $periodeAudit = PeriodeAudit::all();
-        return view('admin.tambahUnit')->with('periodeAudit',$periodeAudit);
+        $ketua = User::whereHas(
+            'roles', function($q){
+                $q->where('role', 'ketua');
+            }
+        )->get();
+        // print_r($students);die;
+
+        
+        return view('admin.tambahUnit', array("periodeAudit" => $periodeAudit, "selectKetua" => $ketua));
     }
 
 
     public function tambahUnit(Request $request)
     {
+        // print_r("asd");die;
         $request->validate([
             'id_periode_audit' => 'required',
             // 'id_standar_ruang_lingkup' => 'required',
@@ -44,9 +68,15 @@ class UnitController extends Controller
             'nip_ketua_tim' => 'required',
         ]); 
 
+        // print_r($request['ketua_tim']);die;
+        DB::table('users')
+            ->where('id', $request['ketua_tim'])
+            ->update(['nip' => $request['nip_ketua_tim']]);
+
+        // print_r('asda');die;
         $max = UnitAudit::max('id');
         $id = $max +1;
-
+        
         // $unit = new UnitAudit;
         $unit = UnitAudit::Create([
             'id_periode_audit' => $request['id_periode_audit'],
@@ -54,7 +84,8 @@ class UnitController extends Controller
             'nama_unit' => $request['nama_unit'],
             'tanggal_audit' => $request['tanggal_audit'],
             'ketua_tim' => $request['ketua_tim'],
-            'nip_ketua_tim' => $request['nip_ketua_tim']
+            'nip_ketua_tim' => $request['nip_ketua_tim'],
+            'id_auditor'    => null
         ]);
         // $unit->id    = $id;
         // $unit->periodeAudit             = $request->input('periodeAudit');
@@ -76,10 +107,13 @@ class UnitController extends Controller
     }
 
     public function destroy($id)
-    {
+    {   
+        // print_r($id);die;
         $periode = UnitAudit::findOrFail($id);
         $periode->delete();
 
+
+        
         return redirect()->back()->with('success','Berhasil Menghapus data');
     }
 }

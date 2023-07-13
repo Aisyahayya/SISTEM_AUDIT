@@ -72,7 +72,7 @@ class AdminController extends Controller
 
     public function dashboardAuditor()
     {
-        $userAuditor = User::role('auditor')->get();
+        $userAuditor = User::role(['ketua','auditor'])->get();
 
         return view('admin.dashboardAuditor', compact('userAuditor'));
     }
@@ -187,20 +187,16 @@ class AdminController extends Controller
             'role'              =>      'required|string',
         ]);
 
-    //    print_r($request->all());
-    //    die;
-
         $user = User::create([
             'name' => ucwords($request['name']),
             'fakultas' => $request['fakultas'],
             'prodi' => $request['prodi'],
             'email' => $request['email'],
-            'password' => bcrypt($request['password'])
-            // 'role' => $request['role']
+            'password' => bcrypt($request['password']),
+            'role' => $request['role']
         ]);
 
-        // $user->assignRole($request['role']);
-        $user->assignRole('auditor');
+        $user->assignRole($request['role']);
 
         if(!is_null($user)) {
             return redirect()->route('admin.dashboardAuditor')->with("success", "Berhasil Tambah");

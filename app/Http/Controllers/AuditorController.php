@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auditee;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DataPendahuluan;
+use App\Models\Evaluasi;
 use App\Models\Grade;
 use App\Models\GradeStoring;
 use App\Models\Question;
@@ -11,6 +14,7 @@ use App\Models\Response;
 use App\Models\Standart;
 use App\Models\User;
 use App\Models\StandarRuangLingkup;
+use App\Models\UnitAudit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Table;
@@ -28,8 +32,10 @@ class AuditorController extends Controller
     public function index(StandarRuangLingkup $standarRuangLingkup)
     {
         $standarRuangLingkup = StandarRuangLingkup::all();
+        $unit = UnitAudit::all();
+        $auditee = User::role('auditee')->get();
 
-        return view('auditor.dashboard', compact('standarRuangLingkup'));
+        return view('auditor.dashboard', compact('standarRuangLingkup','unit','auditee'));
 
 
 //         $data = DataPendahuluan::with('user')
@@ -309,6 +315,108 @@ class AuditorController extends Controller
 
     }
 
+    public function tambahSRL(Request $request)
+    {
+        $request->validate([
+            'unit'                           =>      'required|string',
+            'id_auditee'                     =>      'required|string',
+            'ruang_lingkup'                  =>      'required|string',
+            'parameter_ruang_lingkup'        =>      'required|string',
+        ]);
+
+        $srl = StandarRuangLingkup::create([
+            'unit' => $request['unit'],
+            'id_auditee' => $request['id_auditee'],
+            'ruang_lingkup' => $request['ruang_lingkup'],
+            'parameter_ruang_lingkup' => $request['parameter_ruang_lingkup'],
+            'status' => 'Belum Teraudit'
+        ]);
+
+        if(!is_null($srl)) {
+            return redirect()->route('auditor.dashboard')->with("success", "Berhasil Tambah");
+        }
+        else {
+            return back()->with("error", "Proses Gagal");
+        }
+    }
+
+    public function detailStandarRuangLingkup($id)
+    {
+        $standarRuangLingkup = StandarRuangLingkup::find($id);
+        $evaluasi = Evaluasi::where('standar_ruang_lingkup_id', $id)->first();
+        // print_r($evaluasi->kondisi_awal ? $evaluasi->kondisi_awal : '');
+        // die;
+
+        return view('auditor.detailStandarRuangLingkup', compact('standarRuangLingkup', 'evaluasi'));
+    }
+    
+    public function feedback($id)
+    {
+        $standarRuangLingkup = StandarRuangLingkup::find($id);
+        $feedback = Feedback::where('standar_ruang_lingkup_id', $id)->first();
+        // print_r($feedback->kondisi_awal ? $feedback->kondisi_awal : '');
+        // die;
+
+        return view('auditor.feedback', compact('standarRuangLingkup', 'feedback'));
+    }
+
+    public function tambahEvaluasi(Request $request)
+    {
+        $request->validate([
+            'standar_ruang_lingkup_id'    =>      'required|string',
+            'kondisi_awal'                =>      'required|string',
+            'dasar_evaluasi'              =>      'required|string',
+            'penyebab'                    =>      'required|string',
+            'akibat'                      =>      'required|string',
+            'rekomendasi_followup'        =>      'required|string',
+        ]);
+
+        $srl = Evaluasi::create([
+            'standar_ruang_lingkup_id' => $request['standar_ruang_lingkup_id'],
+            'kondisi_awal' => $request['kondisi_awal'],
+            'dasar_evaluasi' => $request['dasar_evaluasi'],
+            'penyebab' => $request['penyebab'],
+            'akibat' => $request['akibat'],
+            'rekomendasi_followup' => $request['rekomendasi_followup']
+        ]);
+
+        if(!is_null($srl)) {
+            return redirect()->route('auditor.dashboard')->with("success", "Berhasil Tambah Evaluasi");
+        }
+        else {
+            return back()->with("error", "Proses Gagal");
+        }
+    }
+
+    public function updateEvaluasi(Request $request, $id)
+    {
+        $request->validate([
+            'standar_ruang_lingkup_id'    =>      'required|string',
+            'kondisi_awal'                =>      'required|string',
+            'dasar_evaluasi'              =>      'required|string',
+            'penyebab'                    =>      'required|string',
+            'akibat'                      =>      'required|string',
+            'rekomendasi_followup'        =>      'required|string',
+        ]);
+
+        $srl = Evaluasi::find($id);
+
+        $srl = Evaluasi::create([
+            'standar_ruang_lingkup_id' => $request['standar_ruang_lingkup_id'],
+            'kondisi_awal' => $request['kondisi_awal'],
+            'dasar_evaluasi' => $request['dasar_evaluasi'],
+            'penyebab' => $request['penyebab'],
+            'akibat' => $request['akibat'],
+            'rekomendasi_followup' => $request['rekomendasi_followup']
+        ]);
+
+        if(!is_null($srl)) {
+            return redirect()->route('auditor.dashboard')->with("success", "Berhasil Simpan");
+        }
+        else {
+            return back()->with("error", "Proses Gagal");
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -431,6 +539,8 @@ class AuditorController extends Controller
 
     public function pageTambahStandarRuangLingkup()
     {
-        return view('auditor.tambahStandarRuangLingkup');
+        $unit = UnitAudit::all();
+        $auditee = User::role('auditee')->get();
+        return view('auditor.tambahStandarRuangLingkup',compact('unit','auditee'));
     }
 }
