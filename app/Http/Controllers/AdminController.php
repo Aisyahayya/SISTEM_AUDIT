@@ -72,7 +72,7 @@ class AdminController extends Controller
 
     public function dashboardAuditor()
     {
-        $userAuditor = User::all();
+        $userAuditor = User::role(['ketua','auditor'])->get();
 
         return view('admin.dashboardAuditor', compact('userAuditor'));
     }

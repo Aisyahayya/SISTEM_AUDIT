@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auditee;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DataPendahuluan;
@@ -31,8 +32,10 @@ class AuditorController extends Controller
     public function index(StandarRuangLingkup $standarRuangLingkup)
     {
         $standarRuangLingkup = StandarRuangLingkup::all();
+        $unit = UnitAudit::all();
+        $auditee = User::role('auditee')->get();
 
-        return view('auditor.dashboard', compact('standarRuangLingkup'));
+        return view('auditor.dashboard', compact('standarRuangLingkup','unit','auditee'));
 
 
 //         $data = DataPendahuluan::with('user')

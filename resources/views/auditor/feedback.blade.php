@@ -118,7 +118,7 @@
                         <label for="komentar" class="col-md-0 col-form-label text-md-right">Komentar/Klarifikasi : </label>
 
                         <div class="col-12">
-                            <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" aria-describedby="komentar" id="komentar" rows="3"  disabled>{{ $evaluasi->komentar ?? ''}}</textarea>
+                            <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" aria-describedby="komentar" id="komentar" rows="3"  disabled>{{ $feedback->komentar ?? ''}}</textarea>
                             @error('komentar')
                                 <div id="komentar" class="invalid-feedback">
                                     Deskripsi wajib diisi
@@ -131,7 +131,7 @@
                         <label for="tindak_lanjut" class="col-md-0 col-form-label text-md-right">Tindak Lanjut Temuan :</label>
 
                         <div class="col-12">
-                            <textarea name="tindak_lanjut" class="form-control @error('tindak_lanjut') is-invalid @enderror" aria-describedby="tindak_lanjut" id="tindak_lanjut" rows="3" disabled>{{ $evaluasi->tindak_lanjut ?? ''}}</textarea>
+                            <textarea name="tindak_lanjut" class="form-control @error('tindak_lanjut') is-invalid @enderror" aria-describedby="tindak_lanjut" id="tindak_lanjut" rows="3" disabled>{{ $feedback->tindak_lanjut ?? ''}}</textarea>
                             @error('tindak_lanjut')
                                 <div id="tindak_lanjut" class="invalid-feedback">
                                     Deskripsi wajib diisi
@@ -144,7 +144,7 @@
                         <label for="tanggal_kesanggupan" class="col-md-0 col-form-label text-md-right">Tanggal Kesanggupan : </label>
 
                         <div class="col-12">
-                            <input type="date" name="tanggal_kesanggupan" class="form-control @error('tanggal_kesanggupan') is-invalid @enderror" aria-describedby="tanggal_kesanggupan" id="tanggal_kesanggupan" rows="3" disabled>{{  $evaluasi->tanggal_kesanggupan ?? ''}}</textarea>
+                            <input type="date" name="tanggal_kesanggupan" class="form-control @error('tanggal_kesanggupan') is-invalid @enderror" aria-describedby="tanggal_kesanggupan" id="tanggal_kesanggupan" rows="3" disabled value={{  $feedback->tanggal_kesanggupan ?? ''}}>
                             @error('tanggal_kesanggupan')
                                 <div id="tanggal_kesanggupan" class="invalid-feedback">
                                     Deskripsi wajib diisi

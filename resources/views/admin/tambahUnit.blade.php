@@ -50,7 +50,7 @@
                         <form method="POST" action="{{ route('tambahUnit') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row mt-3 mb-3">
-                                <label for="id_periode_audit" class="col-md-4 col-form-label text-md-right">{{ __('ID Periode Audit') }}</label>
+                                <label for="id_periode_audit" class="col-md-4 col-form-label text-md-right">{{ __('Periode Audit') }}</label>
 
                                 <div class="col-md-6">
                                     {{-- <input id="id_periode_audit" type="text" class="form-control" name="id_periode_audit" autofocus required> --}}

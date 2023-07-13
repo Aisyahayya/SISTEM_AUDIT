@@ -155,10 +155,13 @@
                     </thead>
                     <tbody>
                         @foreach($standarRuangLingkup as $d)
+                        @foreach($auditee as $a)
+                        @foreach($unit as $u)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $d->unit }}</td>
-                            <td>{{ $d->id_auditee }}</td>
+                            <td>{{ $d->unit}}</td>
+                            {{-- <td>{{ $d->unit === $u->id ? $u->nama : ''}}</td> --}}
+                            <td>{{ $d->id_auditee === $a->id ? $a->name : ''}}</td>
                             <td>{{ $d->ruang_lingkup }}</td>
                             <td>{{ $d->parameter_ruang_lingkup }}</td>
                             <td>{{ $d->status }}</td>
@@ -192,6 +195,8 @@
                                     </button></a>
                             </td>
                         </tr>
+                        @endforeach
+                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
