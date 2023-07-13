@@ -19,6 +19,7 @@ class CreateStandarRuangLingkupsTable extends Migration
             // $table->foreign('feedback_id')->references('id')->on('feedbacks')->onDelete('cascade');
             $table->integer('id_auditee')->nullable()->unsigned();
             $table->string('unit');
+            $table->string('file_auditee');
             $table->string('ruang_lingkup');
             $table->text('parameter_ruang_lingkup');
             $table->string('status');
