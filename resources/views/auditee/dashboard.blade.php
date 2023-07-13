@@ -448,7 +448,6 @@
                     $('#penyebab').val(result['penyebab']);
                     $('#akibat').val(result['akibat']);
                     $('#rekomendasi_followup').val(result['rekomendasi_followup']);
-                    
                     $("#modal_penilaian").modal("show");
                 }
             }
@@ -492,6 +491,7 @@
             $('#tindak_lanjut').prop("disabled", false)
             $('#tanggal_kesanggupan').prop("disabled", false)
             $("#submit_feedback").show();
+            $("#modal_feedback").modal("show")
         }
         
         
