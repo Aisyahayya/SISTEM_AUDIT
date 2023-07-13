@@ -432,7 +432,7 @@
         $("#r_lingkup").html(ruang_lingkup);
         $("#param_lingkup").html(parameter_ruang_lingkup);
 
-        if(isFile != null || is_file != undefined){
+        if(isFile != null || isFile != undefined){
             // sudah
             $("#linkfile").attr("href", '{{ URL::to('/') }}/file/'+isFile)
             $("#linkfile").html(isFile)
