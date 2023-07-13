@@ -140,6 +140,9 @@ Route::group(['middleware' => ['role:auditee']], function () {
 
     // respon
     Route::get('/auditee/{standart}/respons/', [App\Http\Controllers\ResponsController::class, 'index']);
+    Route::post('/loadevaluasi', [App\Http\Controllers\AuditeeController::class, 'loadpenilaian']);
+    Route::post('/savefeedback', [App\Http\Controllers\AuditeeController::class, 'savefeedback']);
+    Route::post('/loadfeedback', [App\Http\Controllers\AuditeeController::class, 'loadfeedback']);
 });
 
 Route::group(['middleware' => ['role:auditor']], function () {

@@ -13,4 +13,5 @@ class Feedback extends Model
     {
         return $this->belongsTo(StandarRuangLingkup::class);
     }
+
 }

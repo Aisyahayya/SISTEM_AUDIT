@@ -9,8 +9,11 @@ use App\Models\Question;
 use App\Models\Response;
 use App\Models\Standart;
 use App\Models\User;
+use App\Models\StandarRuangLingkup;
+use App\Models\Feedback;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuditeeController extends Controller
 {
@@ -21,25 +24,92 @@ class AuditeeController extends Controller
      */
     public function index()
     {
-        $filter = Carbon::now()->format('Y');
+        // $filter = Carbon::now()->format('Y');
 
-        $uid = \Auth::id();
-        $standart = Standart::with(['responses' => function($q) use($uid) {
-            // Query the name field in status table
-            $q->where('user_id', '=', $uid)->whereYear('created_at','=', Carbon::now()->format('Y'));
-        }])
-        ->whereYear('created_at', date('Y'))->get();
+        // $uid = \Auth::id();
+        // $standart = Standart::with(['responses' => function($q) use($uid) {
+        //     // Query the name field in status table
+        //     $q->where('user_id', '=', $uid)->whereYear('created_at','=', Carbon::now()->format('Y'));
+        // }])
+        // ->whereYear('created_at', date('Y'))->get();
 
-        $i = Carbon::now();
+        // $i = Carbon::now();
 
-        $check = DataPendahuluan::whereYear('created_at', '<=', $i)
-            ->whereYear('updated_at', '<=', $i)
-            ->where('user_id','=', $uid)
-            ->get();
+        // $check = DataPendahuluan::whereYear('created_at', '<=', $i)
+        //     ->whereYear('updated_at', '<=', $i)
+        //     ->where('user_id','=', $uid)
+        //     ->get();
 
-//        dd($filter);
 
-        return view('auditee.dashboard', compact('standart', 'check','filter'));
+        $result = DB::select(
+            DB::raw(
+                "   SELECT
+                        sr.id,
+                        ua.nama_unit,
+                        sr.ruang_lingkup,
+                        f.standar_ruang_lingkup_id as id_standard,
+                        sr.parameter_ruang_lingkup
+                    FROM
+                        standar_ruang_lingkups sr 
+                        LEFT JOIN unit_audits ua ON sr.unit = ua.id
+                        LEFT JOIN feedbacks f ON sr.unit = f.standar_ruang_lingkup_id
+                    "
+            )
+        );
+        // print_r($result);die;
+        
+
+        return view('auditee.dashboard', array("table" => $result));
+    }
+
+    public function loadpenilaian(Request $request){
+
+
+        $data = $request->validate([
+            'id'      => 'required',
+        ]);
+
+        $result = DB::select(
+            DB::raw(
+                "SELECT * FROM evaluasi WHERE standar_ruang_lingkup_id = ".$data['id']
+            )
+        );
+
+        return response()->json($result);
+    }
+
+    public function savefeedback(Request $request){
+        $data = $request->validate([
+            'standar_ruang_lingkup_id'    => 'required',
+            'komentar'                    => 'required',
+            'tindak_lanjut'               => 'required',
+            'tanggal_kesanggupan'         => 'required'
+        ]);
+
+        // print_r($data);die;
+
+        $feedback = Feedback::create($data);
+        // print_r($data);die;
+
+        return redirect()->route('auditee.dashboard')->with('success', 'Berhasil tambah data');
+
+        // return
+    }
+
+    public function loadfeedback(Request $request){
+
+
+        $data = $request->validate([
+            'id'      => 'required',
+        ]);
+
+        $result = DB::select(
+            DB::raw(
+                "SELECT * FROM feedbacks WHERE standar_ruang_lingkup_id = ".$data['id']
+            )
+        );
+
+        return response()->json($result);
     }
 
     public function profile()
