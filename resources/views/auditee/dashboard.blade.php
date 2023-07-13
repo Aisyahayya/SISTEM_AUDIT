@@ -91,11 +91,11 @@
                 <h5 class="modal-title text-capitalize" id="modal_unggah">Unggah File Auditee</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/auditee/{{ auth()->id() }}/dataPendahuluan" method="post">
+            <form action="/uploadFile" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <form action="" method="post" id="form_unggah">
-                        <input type="text" id="id_ruang_lingkup_unggah" name="id_ruang_lingkup">
+                    <!-- <form action="" method="post" id="form_unggah"> -->
+                        <input type="hidden" id="id_ruang_lingkup_unggah" name="id_ruang_lingkup">
                         <table class="table table-responsive table-stripper">
                             <thead>
                                 <tr>
@@ -110,11 +110,13 @@
                                     <td id="r_lingkup">Value Ruang Lingkup</td>
                                     <td id="param_lingkup">value parameter</td>
                                     <td>
-                                        <input type="file" id="fileauditee"></td>
+                                        <input type="file" id="fileauditee" name='fileauditee'>
+                                        <a id="linkfile" href="https://www.WordPress.com" target="_blank">WordPress Homepage</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </form>
+                    <!-- </form> -->
                 </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -293,11 +295,11 @@
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                                 data-bs-target="#home-collapse" aria-expanded="true">
-                            Upload File
+                            Menu
                         </button>
                         <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li class="fw-bold"><a href="{{route('auditee.dashboard')}}" class="link-dark rounded">Upload</a>
+                                <li class="fw-bold"><a href="{{route('auditee.dashboard')}}" class="link-dark rounded">Dashboard</a>
                                 </li>
                                 {{-- <li><a href="{{route('auditee.grade')}}" class="link-dark rounded">Lihat hasil</a>
                                 </li> --}}
@@ -305,7 +307,7 @@
                         </div>
                     </li>
 
-                    <li class="mb-1">
+                    {{--<li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                                 data-bs-target="#account-collapse" aria-expanded="false">
                             Feedback
@@ -316,7 +318,7 @@
                                 <li><a href="{{ route('auditee.feedbackTindakLanjut') }}" class="link-dark rounded">Tindak Lanjut Temuan</a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     
                 </ul>
@@ -369,7 +371,11 @@
                                                 <td>{{$row->nama_unit}}</td>
                                                 <td>{{$row->ruang_lingkup}}</td>
                                                 <td>
-                                                    <button class="btn btn-success" onclick="modal_unggah(`{{$row->id}}`, `{{$row->ruang_lingkup}}`, `{{$row->parameter_ruang_lingkup}}`)">isi</button>
+                                                    @if($row->file_auditee == null)
+                                                        <button class="btn btn-success" onclick="modal_unggah(`{{$row->id}}`, `{{$row->ruang_lingkup}}`, `{{$row->parameter_ruang_lingkup}}`)">isi</button>
+                                                    @else
+                                                    <button class="btn btn-primary" onclick="modal_unggah(`{{$row->id}}`, `{{$row->ruang_lingkup}}`, `{{$row->parameter_ruang_lingkup}}`, `{{$row->file_auditee}}`)">Lihat</button>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-success" onclick="modal_penilaian({{$row->id}})">Lihat</button> | 
@@ -393,6 +399,8 @@
             </div>
             <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#kirimsetupfile">Submit</button> -->
            
+        </div>
+    </div>
 </div>
 
 @include('layouts.footer')
@@ -418,12 +426,23 @@
         $('#table_standart').DataTable();
     });
 
-    function modal_unggah(id, ruang_lingkup, parameter_ruang_lingkup){
-        // console.log(id);
-
+    function modal_unggah(id, ruang_lingkup, parameter_ruang_lingkup, isFile){
+        
         $('#id_ruang_lingkup_unggah').val(id);
         $("#r_lingkup").html(ruang_lingkup);
         $("#param_lingkup").html(parameter_ruang_lingkup);
+
+        if(isFile != null || is_file != undefined){
+            // sudah
+            $("#linkfile").attr("href", '{{ URL::to('/') }}/file/'+isFile)
+            $("#linkfile").html(isFile)
+            $("#linkfile").show()
+            $("#fileauditee").hide()
+        }else{
+            $("#fileauditee").show()
+            $("#linkfile").hide()
+            //belum upload
+        }
 
         $("#modal_unggah").modal("show")
     }

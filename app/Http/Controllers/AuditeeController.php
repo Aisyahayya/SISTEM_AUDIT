@@ -14,6 +14,7 @@ use App\Models\Feedback;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AuditeeController extends Controller
 {
@@ -48,7 +49,8 @@ class AuditeeController extends Controller
                         ua.nama_unit,
                         sr.ruang_lingkup,
                         f.standar_ruang_lingkup_id as id_standard,
-                        sr.parameter_ruang_lingkup
+                        sr.parameter_ruang_lingkup,
+                        sr.file_auditee
                     FROM
                         standar_ruang_lingkups sr 
                         LEFT JOIN unit_audits ua ON sr.unit = ua.id
@@ -335,6 +337,27 @@ class AuditeeController extends Controller
         else {
             return back()->with("error", "Proses Gagal");
         }
+
+    }
+
+    public function uploadFile(Request $request){
+        // print_r($request->hasFile(''));die;
+
+        $srl = StandarRuangLingkup::find($request->input('id_ruang_lingkup'));
+
+        $filename = '';
+        if($request->hasFile('fileauditee')){
+            // print_r("adaan");
+            $file_auditee = $request->file('fileauditee');
+            $filename = "anggis"."-".Str::random(5).".".$file_auditee->getClientOriginalExtension();
+            $file_auditee->move(public_path('/file/'), $filename);
+        }
+        // print_r("gaadaan");die;
+        
+        $srl->file_auditee = ($request->hasFile('fileauditee')) ? $filename : $srl->file_auditee;
+        $srl->save();
+
+        return redirect()->route('auditee.dashboard')->with('success', 'File Berhasil Terupload.');
 
     }
 

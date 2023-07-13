@@ -17,6 +17,7 @@ class StandarRuangLingkup extends Model
         'parameter_ruang_lingkup',
         'status',
         'feedback',
+        'file_auditee'
     ];
 
     protected $hidden = [

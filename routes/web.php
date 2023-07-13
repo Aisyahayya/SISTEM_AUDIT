@@ -143,6 +143,7 @@ Route::group(['middleware' => ['role:auditee']], function () {
     Route::post('/loadevaluasi', [App\Http\Controllers\AuditeeController::class, 'loadpenilaian']);
     Route::post('/savefeedback', [App\Http\Controllers\AuditeeController::class, 'savefeedback']);
     Route::post('/loadfeedback', [App\Http\Controllers\AuditeeController::class, 'loadfeedback']);
+    Route::post('/uploadFile',[App\Http\Controllers\AuditeeController::class, 'uploadFile']);
 });
 
 Route::group(['middleware' => ['role:auditor']], function () {
